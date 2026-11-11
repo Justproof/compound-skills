@@ -27,13 +27,13 @@ The layout recipes are distilled from Shruti Balasa's *Complete Guide to CSS Fle
 - **R2. One column first.** Every layout starts as a single column and earns more columns at a breakpoint, or responds on its own with `auto-fit` / `flex-wrap`.
 - **R3. Flexbox for one direction, Grid for two.** Rows or columns of items use Flexbox. Anything with both rows and columns, or a page-level layout, uses Grid. No floats, tables or absolute positioning for layout.
 - **R4. Touch targets.** Every interactive element is at least 48×48px, with at least 8px between neighbours.
-- **R5. Nothing depends on hover.** Every `:hover` is paired with `:active` and `:focus-visible`, and hover-only styling sits inside `@media (hover: hover)`. Any action reachable by hover is also reachable by tap.
+- **R5. Nothing depends on hover.** Every `:hover` is paired with `:active` and `:focus-visible`, and hover-only styling sits inside `@media (hover: hover)`. Any action reachable by hover is also reachable by tap. Tailwind 4 already compiles every `hover:` utility inside that media query, so in a Tailwind 4 project write plain `hover:` and do not add the gate by hand.
 - **R6. No horizontal overflow.** No fixed pixel widths on containers. Text-heavy flex children get `min-width: 0`; grid tracks holding long content use `minmax(0, 1fr)`.
 - **R7. Dynamic viewport height.** Full-height layouts use `min-height: 100dvh`, never `100vh`, because mobile browser chrome makes `100vh` overflow.
 - **R8. `gap` for spacing between items.** Not margins on children.
 - **R9. Fluid type and spacing.** Use `clamp()` (or the project's fluid scale) so text stays readable from phone to desktop without a breakpoint per size.
 - **R10. Contained scrolling.** Scrollable regions set `overscroll-behavior: contain`. No nested scroll areas unless the PRD specifies how touch is handled.
-- **R11. Safe areas.** Anything fixed to a screen edge pads with `env(safe-area-inset-*)`.
+- **R11. Safe areas.** Anything fixed to a screen edge pads with `max(env(safe-area-inset-*), <minimum>)`. Never the fallback form `env(safe-area-inset-bottom, 0.5rem)`: the fallback applies only where `env()` is unsupported, so everywhere else it resolves to 0 and removes the padding it was meant to guarantee.
 - **R12. Bottom navigation on mobile.** Primary navigation on small screens is a fixed bottom tab bar (section 7), never a hamburger menu.
 - **R13. Reuse before building.** If the project already has a component for the job, the PRD names it and the story reuses it.
 
@@ -128,7 +128,7 @@ Required by R12 for primary navigation on small screens. Thumbs reach the bottom
 - 4 to 5 tabs at most.
 - Each tab: icon above a short label, clear active versus inactive state, and a minimum height of 48px so the touch target is guaranteed, not left to padding.
 - Auto-hide on scroll: the bar slides away while the user scrolls down to read and returns as soon as they scroll back up. Track an anchor scroll position; hide after about 60px of downward travel, show after about 60px upward, and re-anchor each time so small jitters do nothing.
-- Main content is padded so the bar never covers the last item, and the bar itself pads with `env(safe-area-inset-bottom)` so tabs clear the home indicator.
+- Main content is padded so the bar never covers the last item, and the bar itself pads with `max(env(safe-area-inset-bottom), 0.5rem)` so tabs clear the home indicator and keep their padding where there is none.
 - The `<nav>` carries an `aria-label` (for example "Mobile navigation").
 - Optional raised centre tab for the one primary action: a floating circle lifted out of the tab row with its label underneath, wired to an event or modal instead of a route. Use it for one action at most.
 - Built once as a reusable component driven by a tabs array (`route`, `label`, `icon`, `match`, where `match` accepts wildcards such as `games.*` for section-wide active state). If the project already has one, the PRD says "reuse X" and does not respecify it.
@@ -138,8 +138,8 @@ Reference implementation for a Laravel, Blade, Tailwind and Alpine project. The 
 ```
 Container:   fixed inset-x-0 bottom-0 z-50 flex items-center justify-around border-t border-zinc-700 bg-zinc-900 py-2 lg:hidden transition-transform duration-300 will-change-transform
 Auto-hide:   Alpine toggles translate-y-full (hidden) / translate-y-0 (shown) on @scroll.window.passive, 60px delta, re-anchoring anchorY = window.scrollY
-Safe area:   style="padding-bottom: env(safe-area-inset-bottom, 0.5rem)"
-Tab:         flex flex-col items-center gap-1 flex-1 py-1 min-h-[48px] justify-center
+Safe area:   style="padding-bottom: max(env(safe-area-inset-bottom), 0.5rem)"
+Tab:         flex flex-col items-center gap-1 flex-1 py-1 min-h-12 justify-center
 Active:      text-emerald-400, resolved with request()->routeIs($tab['match'])
 Inactive:    text-zinc-400
 Icon:        size-5, rendered dynamically: <x-dynamic-component :component="'heroicon-m-' . $tab['icon']" class="size-5" />
@@ -177,7 +177,7 @@ Every website UI story carries all of these, worded for the story. Drop one only
 Add where relevant:
 
 - `- [ ] Reuses [existing component] rather than introducing a new one`
-- `- [ ] Fixed elements respect safe-area insets`
+- `- [ ] Fixed elements respect safe-area insets, and keep their padding on a device with none (measured, not assumed)`
 - `- [ ] Primary navigation uses the mobile bottom nav below [breakpoint]`
 
 ## 10. What the PRD must contain
