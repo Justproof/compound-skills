@@ -50,6 +50,10 @@ The PRD is saved to `tasks/`. From there, `compound-engineering` takes over the 
 
 `compound-engineering` is deliberately generic. Its quality checks use `npm` commands as placeholders, so swap in your project's own test and lint commands.
 
+## See also
+
+A PRD is prose too, and prose can read like a list even when every fact in it is right. [rechain](https://github.com/Justproof/rechain) checks that each paragraph follows from or reverses the one before it, never "and then", and rewrites the joints that fail.
+
 ## Credits
 
 The Flexbox and Grid recipes in `mobile-first-ui.md` are distilled from Shruti Balasa's _Complete Guide to CSS Flex & Grid (Vanilla CSS)_. The compound engineering loop is inspired by the approach Every describes at [every.to](https://every.to); this is an independent write-up, not their plugin.
