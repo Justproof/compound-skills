@@ -56,7 +56,7 @@ Question format:
 ```text
 **1. Where should a finished run be saved?**
 
-A. File download to a fixed folder (recommended: no server needed, matches how the ingest skill reads files)
+A. File download to a fixed folder (recommended: no server needed, and the next step can pick the file up from a known place)
 B. POST to the Laravel app
 C. Clipboard only
 D. Other: [specify]
