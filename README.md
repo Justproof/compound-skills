@@ -19,12 +19,12 @@ Both come from the same habit. A plan that skips the questions gets them back la
 Clone once, then link each skill into your global skills folder:
 
 ```sh
-git clone https://github.com/Justproof/compound-skills.git ~/src/compound-skills
-ln -s ~/src/compound-skills/prd-bake ~/.claude/skills/prd-bake
-ln -s ~/src/compound-skills/compound-engineering ~/.claude/skills/compound-engineering
+git clone https://github.com/Justproof/compound-skills.git ~/.claude/compound-skills
+ln -s ~/.claude/compound-skills/prd-bake ~/.claude/skills/prd-bake
+ln -s ~/.claude/compound-skills/compound-engineering ~/.claude/skills/compound-engineering
 ```
 
-That makes both available in every project Claude Code opens, and `git -C ~/src/compound-skills pull` updates them in place. For one project only, link into that project's `.claude/skills/` instead.
+That makes both available in every project Claude Code opens, and `git -C ~/.claude/compound-skills pull` updates them in place. For one project only, link into that project's `.claude/skills/` instead.
 
 ## Use it
 
