@@ -63,6 +63,7 @@ Review by measuring, not by rereading. For each acceptance criterion, name the c
 - **Safety:** no secrets in the diff, input validated at the boundary, queries not multiplied per row.
 - **Guards bite:** for every new test or check that exists to prevent a mistake, undo the fix, watch it fail with a message that names the problem, then restore the fix. A guard that has never failed has not been tested.
 - **Docs agree:** search the instruction files, skills and docs for the terms this change touched. If any of them now says something false, that is part of this change.
+- **Prose chains:** when the change adds or rewrites prose people read in order (a README, a guide, a PRD, a post), each paragraph should follow from or reverse the one before it, never "and then". Use [`rechain`](https://github.com/Justproof/rechain) when it is installed to find and fix the joints that fail, or read the paragraphs in pairs and ask whether "so" or "but" fits between them.
 
 Then read the diff once as the maintainer who opens it in six months with no context: is the reason for each non-obvious line findable?
 
