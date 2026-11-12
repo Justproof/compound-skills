@@ -1,6 +1,6 @@
 # compound-skills
 
-Two Claude Code skills for the part of a feature that happens before the first line of code. `prd-bake` questions you until every decision in a feature is made and written down. `compound-engineering` runs the loop around the build: plan, work, review, then write down what the work taught you so the next feature starts ahead.
+Two Claude Code skills for the parts of a feature that happen around the code. `prd-bake` questions you until every decision in a feature is made and written down. `compound-engineering` runs the loop around the build: plan, work, review, then write down what the work taught you so the next feature starts ahead.
 
 Both come from the same habit. A plan that skips the questions gets them back later as rework, usually at the worst possible moment, in the middle of the build.
 
@@ -52,7 +52,7 @@ The PRD is saved to `tasks/`. From there, `compound-engineering` takes over the 
 | 4    | A line in `CLAUDE.md` or `AGENTS.md`, with its reason | It is read, and paid for, every session |
 | 5    | The chat                                              | It does not                             |
 
-The habit is to reach for rung 4, which is why instruction files grow until nobody reads them. So the skill asks for the highest rung that fits, and its closing report lists what landed where:
+The habit is to reach for rung 4, which is why instruction files grow until nobody reads them. So the skill asks for the highest rung that fits, and its closing report says which rung each lesson went on:
 
 ```text
 Compounded:
@@ -61,6 +61,8 @@ Dropped: two observations that would not change a future session
 ```
 
 A ratchet is the rung for a rule your old code already breaks. It counts today's violations, fails when the count rises, and fails when it falls too, with a message telling you to lower the ceiling. That second failure is what keeps the number in the file true.
+
+You do not have to run the whole loop. Say "build this prd" and it starts from the PRD, reading the decisions table and the Compounding Opportunities section instead of planning again. Say "what did we learn" at the end of any session and it runs only the compound step: harvest the corrections, root causes and wrong instructions, sort them, build the rungs.
 
 ## What each skill refuses to do
 
